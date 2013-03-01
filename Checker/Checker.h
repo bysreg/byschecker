@@ -1,8 +1,4 @@
 #pragma once
-#include <vector>
-#include <iostream>
-#include <string>
-#include <cmath>
 
 using namespace std;
 
@@ -60,19 +56,19 @@ public:
 	Checker(int size);
 	Checker(const string& game_state);	
 
-	string getGameStateString();
+	string getGameStateString() const;
 	static Checker parseGameStateString(const string& game_state);
-	Checker simulate(GameMove move);
+	Checker simulate(GameMove move) const;
 		
 	bool movePiece(GameMove move);
-	vector<Point> getWalkableFromCoinInTile(int row,int col); 
-	vector<GameMove> getAllLegalMoves();
+	vector<Point> getWalkableFromCoinInTile(int row,int col) const; 
+	vector<GameMove> getAllLegalMoves() const;
 	static GameTile convertToTile(char c);
-	void printBoard();	
-	bool isThereEatable();
+	void printBoard() const;	
+	bool isThereEatable() const;
 	bool nextTurn();
-	int getTurn();
-	int whoWin();
-	bool isMoveValid(GameMove move);
+	int getTurn() const;
+	int whoWin() const;
+	bool isMoveValid(GameMove move) const;
 };
 

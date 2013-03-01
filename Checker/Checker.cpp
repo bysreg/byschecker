@@ -1,5 +1,7 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Checker.h"
+
+using namespace std;
 
 Checker::Checker(int size)
 {
@@ -46,7 +48,7 @@ Checker::Checker(const string& game_state) {
 		win_ = turn_;	
 }
 
-string Checker::getGameStateString() {
+string Checker::getGameStateString() const {
 	string ret;	
 	for(int i=0;i<size_;i++) {
 		for(int j=0;j<size_;j++) {
@@ -66,7 +68,7 @@ Checker Checker::parseGameStateString(const string& game_state) {
 	return Checker(game_state);	
 }
 
-Checker Checker::simulate(GameMove move) {
+Checker Checker::simulate(GameMove move) const {
 	Checker ret = *this;
 	
 	ret.movePiece(move);
@@ -84,7 +86,7 @@ void Checker::setPiece(Point p, int player_number, bool is_king) {
 	board_[p.row][p.col].is_king = is_king;
 }
 
-bool Checker::isMoveValid(GameMove move) {	
+bool Checker::isMoveValid(GameMove move) const {	
 	Point from = move.from;
 	Point to = move.to;	
 
@@ -155,7 +157,7 @@ bool Checker::movePiece(GameMove move) {
 	return true;
 }
 
-vector<Point> Checker::getWalkableFromCoinInTile(int row, int col) {
+vector<Point> Checker::getWalkableFromCoinInTile(int row, int col) const {
 	vector<Point> arrGamePoint;		
 	if(!board_[row][col].is_there_piece || board_[row][col].player_number!=turn_) {
 		return arrGamePoint;
@@ -172,7 +174,7 @@ vector<Point> Checker::getWalkableFromCoinInTile(int row, int col) {
 	return arrGamePoint;
 }
 
-vector<GameMove> Checker::getAllLegalMoves() {
+vector<GameMove> Checker::getAllLegalMoves() const {
 	vector<GameMove> arrMove;
 	for(int i=0;i<size_;i++) {
 		for(int j=0;j<size_;j++) {
@@ -192,7 +194,7 @@ vector<GameMove> Checker::getAllLegalMoves() {
 	return arrMove;
 }
 
-void Checker::printBoard() {
+void Checker::printBoard() const{
 	cout<<"    ";
 	for(int i=0;i<size_;i++)
 		cout<<" "<<i<<" ";
@@ -237,7 +239,7 @@ GameTile Checker::convertToTile(char c) {
 }
 
 //mengembalikan nilai true, jika pada giliran sekarang ada yang bisa dimakan 
-bool Checker::isThereEatable() {
+bool Checker::isThereEatable() const {
 	for(int i=0;i<size_;i++) {
 		for(int j=0;j<size_;j++) {			
 			if(!board_[i][j].is_there_piece || board_[i][j].player_number != turn_) 
@@ -289,10 +291,10 @@ bool Checker::nextTurn() {
 	return false;	
 }
 
-int Checker::getTurn() {
+int Checker::getTurn() const {
 	return turn_;
 }
 
-int Checker::whoWin() {
+int Checker::whoWin() const {
 	return win_;
 }

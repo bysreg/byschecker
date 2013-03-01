@@ -13,9 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Lua Header Files">
+      <UniqueIdentifier>{2f415e3e-e74e-4b75-929b-cf84003920df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="ai.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,6 +31,24 @@
     <ClInclude Include="Checker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lauxlib.h">
+      <Filter>Lua Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua.h">
+      <Filter>Lua Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua.hpp">
+      <Filter>Lua Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luaconf.h">
+      <Filter>Lua Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lualib.h">
+      <Filter>Lua Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ai.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +58,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

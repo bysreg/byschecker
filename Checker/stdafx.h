@@ -10,4 +10,15 @@
 #include <stdio.h>
 #include <tchar.h>
 
-// TODO: reference additional headers your program requires here
+#include "lua.hpp"
+#include "lua.h"
+#include "luaconf.h"
+#include "lauxlib.h"
+#include "lualib.h"
+#include <cstdlib>
+#include <string>
+#include <cstdio>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <ctime>
