@@ -68,7 +68,9 @@ Checker Checker::parseGameStateString(const string& game_state) {
 
 Checker Checker::simulate(GameMove move) {
 	Checker ret = *this;
-	//FIXME
+	
+	ret.movePiece(move);
+
 	return ret;
 }
 
@@ -249,7 +251,7 @@ bool Checker::isThereEatable() {
 
 			for(int k=0;k<4;k++) {
 
-				if(turn_ == 1 && far_row > 0 && !tile.is_king)
+				if(turn_ == 1 && far_row[k] > 0 && !tile.is_king)
 					continue;
 				else if(turn_==2 && far_row[k] < 0 && !tile.is_king )
 					continue;

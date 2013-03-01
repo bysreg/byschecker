@@ -26,5 +26,6 @@ int main() {
 			printf("P%d langkah dari [%d, %d] ke [%d, %d] GAGAL\n", c.getTurn(), row1, col1, row2, col2);
 	}while(c.whoWin() == 0);
 	cout<<"winner : "<<c.whoWin()<<endl;
+	cin>>row1;
 	return 0;
 }
