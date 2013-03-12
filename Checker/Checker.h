@@ -5,6 +5,7 @@ using namespace std;
 struct Point {
 	int row;
 	int col;
+
 	Point() {row = 0; col = 0;}
 	Point(int row, int col) {
 		this->row = row;
@@ -15,6 +16,7 @@ struct Point {
 struct GameMove {
 	Point from;
 	Point to;	
+
 	GameMove() {}
 	GameMove(Point from, Point to) {
 		this->from = from;

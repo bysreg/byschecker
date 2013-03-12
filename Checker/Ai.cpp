@@ -62,9 +62,8 @@ int luaopen_aiclib (lua_State *L) {
     return 1;
 }
 
-GameMove Ai::selectMove(const Checker& checker) {
-	vector<GameMove> legalMoves = checker.getAllLegalMoves();
-	lua_State *L = luaL_newstate();                        /* Create Lua state variable */
+Ai::Ai() : L() {	
+	L = luaL_newstate();                        /* Create Lua state variable */
     luaL_openlibs(L);                           /* open semua standard Lua libraries */
 
 	luaL_requiref(L, "aiclib", luaopen_aiclib, 1); // butuh aiclib (AI C library) dan taro di global name lua
@@ -74,6 +73,14 @@ GameMove Ai::selectMove(const Checker& checker) {
 
 	if (lua_pcall(L, 0, 0, 0))                  /* Run the loaded Lua script */
 		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
+}
+
+Ai::~Ai() {
+	lua_close(L);                               /* Clean up, free the Lua state var */
+}
+
+GameMove Ai::selectMove(const Checker& checker) {
+	vector<GameMove> legalMoves = checker.getAllLegalMoves();	
 	
 	//siap2 manggil fungsi monte carlo
 	lua_getglobal(L, "monteCarlo");	
@@ -83,13 +90,9 @@ GameMove Ai::selectMove(const Checker& checker) {
 	
 	if(lua_pcall(L, 3, 1, 0))
 		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
-	
-    if (!lua_isnumber(L, -1))  /* retrieve result */
-		bail(L, "function `f' must return a number");
-    int ret = lua_tonumber(L, -1);
+    
+	int ret = lua_tonumber(L, -1);
     lua_pop(L, 1);  /* pop returned value */	
-
-	lua_close(L);                               /* Clean up, free the Lua state var */
-	//cout<<"AI select "<<ret<<endl;
+		
 	return legalMoves[ret];
 }

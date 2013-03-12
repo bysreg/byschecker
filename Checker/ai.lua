@@ -107,7 +107,7 @@ function monteCarlo(game_state, num_moves, time)
 	local best_move = monteCarloSelectFinal(root_node)
 	--]]
 
-	math.random(num_moves)
-	local ran = math.random(num_moves) - 1 -- zero based index			
+	random(num_moves)
+	local ran = random(num_moves) - 1 -- zero based index			
 	return ran
 end
