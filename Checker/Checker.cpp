@@ -31,7 +31,7 @@ Checker::Checker(int size)
 
 Checker::Checker(const string& game_state) {
 	size_ = (int) sqrt(static_cast<float>(game_state.size()-1));		
-	turn_ = game_state[game_state.size() - 1];	
+	turn_ = game_state[game_state.size() - 1] - '0';	
 	
 	int string_index = 0;
 	for(int i=0;i<size_;++i) {
@@ -40,6 +40,7 @@ Checker::Checker(const string& game_state) {
 			v.push_back(convertToTile(game_state[string_index]));
 			++string_index;
 		}
+		this->board_.push_back(v);
 	}	
 
 	any_eatable_ = isThereEatable();
@@ -55,9 +56,9 @@ string Checker::getGameStateString() const {
 			if(!board_[i][j].is_there_piece)
 				ret.push_back('0');
 			else if(board_[i][j].player_number == 1)
-				ret.push_back(-1*(board_[i][j].is_king ? 2:1) + '0');
+				ret.push_back((board_[i][j].is_king ? 2:1) + '0');
 			else
-				ret.push_back(1*(board_[i][j].is_king ? 2:1) + '0');				
+				ret.push_back((board_[i][j].is_king ? 4:3) + '0');				
 		}
 	}
 	ret.push_back(turn_ + '0');
@@ -225,14 +226,14 @@ GameTile Checker::convertToTile(char c) {
 	GameTile ret;
 	if(v == 0) {
 		ret.is_there_piece = false;
-	}else if(v > 0) {
+	}else if(v <=2) {
 		ret.is_there_piece = true;
 		ret.player_number = 1;
-		ret.is_king = (abs(v)==2? true:false);
-	}else if(v==2) {
+		ret.is_king = (v==2 ? true:false);
+	}else {
 		ret.is_there_piece = true;
 		ret.player_number = 2;
-		ret.is_king = (abs(v)==2? true:false);
+		ret.is_king = ((v - 2)==2? true:false);
 	}
 	
 	return ret;

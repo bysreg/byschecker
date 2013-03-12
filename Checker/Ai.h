@@ -8,3 +8,5 @@ public:
 	static GameMove selectMove(const Checker& checker);
 };
 
+typedef int (*lua_CFunction) (lua_State *L);	
+

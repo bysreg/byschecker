@@ -5,6 +5,17 @@
 using namespace std;
 
 int main() {
+	for(int i=0;i<100;i++) {		
+		Checker ca(10);
+		int count = 0;
+		do {		
+			int turn = ca.getTurn();							
+			ca.movePiece(Ai::selectMove(ca));
+			count++;
+		}while(ca.whoWin() == 0);
+		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());
+	}
+
 	cout<<"Checker start"<<endl;
 	Checker c(10);
 	int row1, row2, col1, col2;
