@@ -26,10 +26,11 @@ int main() {
 	dw1 = GetTickCount();	
 	//pure random hybrid c & lua
 	for(int i=0;i<100;i++) {		
+		cout<<"NEW GAME--------------------------"<<endl;
 		Checker ca(10);
 		int count = 0;
 		do {		
-			int turn = ca.getTurn();				
+			int turn = ca.getTurn();					
 			ca.movePiece(ai.selectMove(ca));
 			count++;
 		}while(ca.whoWin() == 0);
@@ -38,6 +39,7 @@ int main() {
 	dw2 = GetTickCount();
 	cout << "time : "<<(dw2-dw1)<<endl;
 
+	/*
 	cout<<"Checker start"<<endl;
 	Checker c(10);
 	int row1, row2, col1, col2;
@@ -65,5 +67,8 @@ int main() {
 	}while(c.whoWin() == 0);
 	cout<<"winner : "<<c.whoWin()<<endl;
 	cin>>row1;
+	*/
+	int a;
+	cin>>a;
 	return 0;
 }
