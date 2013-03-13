@@ -46,7 +46,7 @@ Checker::Checker(const string& game_state) {
 	any_eatable_ = isThereEatable();
 	win_ = 0;
 	if(getAllLegalMoves().size() == 0)
-		win_ = turn_;	
+		win_ = (turn_ == 1 ? 2 : 1);	
 }
 
 string Checker::getGameStateString() const {
@@ -75,6 +75,10 @@ Checker Checker::simulate(GameMove move) const {
 	ret.movePiece(move);
 
 	return ret;
+}
+
+int Checker::getSize() const {
+	return size_;
 }
 
 void Checker::removePiece(Point p) {

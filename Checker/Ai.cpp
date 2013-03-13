@@ -92,7 +92,6 @@ GameMove Ai::selectMove(const Checker& checker) {
 		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
     
 	int ret = lua_tonumber(L, -1);
-    lua_pop(L, 1);  /* pop returned value */	
-		
+    lua_pop(L, 1);  /* pop returned value */		
 	return legalMoves[ret];
 }

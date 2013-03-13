@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main() {
+int main() {	
 	DWORD dw1 = GetTickCount();
 	//pure random pure c
 	for(int i=0;i<100;i++) {		
@@ -24,7 +24,7 @@ int main() {
 
 	Ai ai;
 	dw1 = GetTickCount();	
-	//pure random hybrid c & lua
+	//monte carlo hybrid c & lua
 	for(int i=0;i<100;i++) {		
 		cout<<"NEW GAME--------------------------"<<endl;
 		Checker ca(10);
@@ -33,8 +33,9 @@ int main() {
 			int turn = ca.getTurn();					
 			ca.movePiece(ai.selectMove(ca));
 			count++;
+			ca.printBoard();
 		}while(ca.whoWin() == 0);
-		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());
+		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());		
 	}
 	dw2 = GetTickCount();
 	cout << "time : "<<(dw2-dw1)<<endl;
