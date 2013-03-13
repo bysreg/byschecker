@@ -1,10 +1,10 @@
 math.randomseed(os.time())
 local random = math.random
-local test = nil
 
 local g_monteCarlo = {
 	map = {}, 
 	size = 0, 
+	time = 1, 
 }
 
 function monteCarloCreateNode(value, parent)
@@ -27,14 +27,14 @@ function monteCarloSelect(node)
 		return node.childs[move_index], move_index
 	end
 
-	new_game_state = aiclib.simulate(node.value, move_index)	
-	--print("not exist yet", move_index)	
+	new_game_state = aiclib.simulate(node.value, move_index)		
 	
 	if(g_monteCarlo.map[new_game_state] ~= nil) then
 		node.childs[move_index] = g_monteCarlo.map[new_game_state]
 		return g_monteCarlo.map[new_game_state], move_index
 	end
 		
+	--print("not exist yet", move_index)	
 	selected_node = monteCarloCreateNode(new_game_state, node)				
 	return selected_node, move_index
 end
@@ -58,6 +58,7 @@ function monteCarloSimulate(node)
 		current_node = monteCarloCreateNode(new_game_state, current_node)		
 		result = aiclib.whoWin(current_node.value)		
 	end	
+
 	--print("result of simulation : ", result)
 	return result
 end
@@ -87,8 +88,9 @@ function monteCarloSelectFinal(node)
 end
 
 --menerima state game_state dengan jumlah kemungkinan move sebanyak num_moves dengan waktu proses maksimum sebanyak time
-function monteCarlo(game_state, num_moves, time) 				
+function monteCarlo(game_state, num_moves) 			
 	local start_time = os.time()
+	local time = g_monteCarlo.time
 	local root_node = nil
 	if(g_monteCarlo.map[game_state] ~= nil) then
 		root_node = g_monteCarlo.map[game_state]
@@ -121,6 +123,6 @@ function monteCarlo(game_state, num_moves, time)
 		end
 	end	
 	local best_move = monteCarloSelectFinal(root_node)
-	print("best_move", best_move, g_monteCarlo.size, count)	
+	--print("best_move", best_move, g_monteCarlo.size, count)	
 	return best_move
 end

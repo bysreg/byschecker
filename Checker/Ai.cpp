@@ -3,9 +3,8 @@
 
 void bail(lua_State *L, char *msg){
 	fprintf(stderr, "\nFATAL ERROR:\n  %s: %s\n\n",
-		msg, lua_tostring(L, -1));
-	int a;
-	cin>>a;
+		msg, lua_tostring(L, -1));	
+	getchar(); //pause before exit
 	exit(1);
 }
 
@@ -81,14 +80,12 @@ Ai::~Ai() {
 
 GameMove Ai::selectMove(const Checker& checker) {
 	vector<GameMove> legalMoves = checker.getAllLegalMoves();	
-	
-	//siap2 manggil fungsi monte carlo
+		
 	lua_getglobal(L, "monteCarlo");	
 	lua_pushstring(L, checker.getGameStateString().c_str());
-	lua_pushnumber(L, legalMoves.size());
-	lua_pushnumber(L, 3);
+	lua_pushnumber(L, legalMoves.size());	
 	
-	if(lua_pcall(L, 3, 1, 0))
+	if(lua_pcall(L, 2, 1, 0))
 		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
     
 	int ret = lua_tonumber(L, -1);
