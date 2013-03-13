@@ -61,7 +61,8 @@ public:
 	string getGameStateString() const;
 	static Checker parseGameStateString(const string& game_state);
 	Checker simulate(GameMove move) const;	
-		
+	
+	int getSize() const;
 	bool movePiece(GameMove move);
 	vector<Point> getWalkableFromCoinInTile(int row,int col) const; 
 	vector<GameMove> getAllLegalMoves() const;

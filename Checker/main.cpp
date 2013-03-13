@@ -1,43 +1,25 @@
 #include "stdafx.h"
 #include "Checker.h"
 #include "Ai.h"
-#include <windows.h>
 
 using namespace std;
 
-int main() {
-	DWORD dw1 = GetTickCount();
-	//pure random pure c
+int main() {		
+	Ai ai;	
+	//monte carlo hybrid c & lua
 	for(int i=0;i<100;i++) {		
-		Checker ca(10);
-		int count = 0;
-		do {		
-			int turn = ca.getTurn();	
-			vector<GameMove> legalMoves = ca.getAllLegalMoves();
-			ca.movePiece(legalMoves[rand() % legalMoves.size()]);
-			count++;
-		}while(ca.whoWin() == 0);
-		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());
-	}
-	DWORD dw2 = GetTickCount();
-	cout << "time : "<<(dw2-dw1)<<endl;
-
-	Ai ai;
-	dw1 = GetTickCount();	
-	//pure random hybrid c & lua
-	for(int i=0;i<100;i++) {		
-		cout<<"NEW GAME--------------------------"<<endl;
+		cout<<"------------------NEW GAME----------------------"<<endl;
 		Checker ca(10);
 		int count = 0;
 		do {		
 			int turn = ca.getTurn();					
-			ca.movePiece(ai.selectMove(ca));
-			count++;
+			GameMove m = ai.selectMove(ca);
+			ca.movePiece(m);
+			printf("P%d langkah dari [%d, %d] ke [%d, %d] sukses\n", turn, m.from.row, m.from.col, m.to.row, m.to.col);
+			count++;			
 		}while(ca.whoWin() == 0);
-		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());
-	}
-	dw2 = GetTickCount();
-	cout << "time : "<<(dw2-dw1)<<endl;
+		printf("%d turns : %d , result : %d\n", i, count, ca.whoWin());		
+	}		
 
 	/*
 	cout<<"Checker start"<<endl;
