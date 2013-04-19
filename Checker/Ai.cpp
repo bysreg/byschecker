@@ -41,6 +41,7 @@ static int l_whoWin(lua_State *L) {
 	return 1;
 }
 
+// mengeluarkan 1 untuk P1(yang jalan duluan), 2 untuk P2
 static int l_getTurn(lua_State *L) {
 	string game_state = luaL_checkstring(L, 1);
 	Checker checker(game_state);	
@@ -65,7 +66,7 @@ Ai::Ai() : L() {
 	L = luaL_newstate();                        /* Create Lua state variable */
     luaL_openlibs(L);                           /* open semua standard Lua libraries */
 
-	luaL_requiref(L, "aiclib", luaopen_aiclib, 1); // butuh aiclib (AI C library) dan taro di global name lua
+	luaL_requiref(L, "aif", luaopen_aiclib, 1); // butuh aif (AI functions) dan taro di global name lua
 
     if (luaL_loadfile(L, "ai.lua"))    /* Load but don't run the Lua script */
 		bail(L, "luaL_loadfile() failed");      /* Error out if file can't be read */	

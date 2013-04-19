@@ -58,20 +58,21 @@ public:
 	Checker(int size);
 	Checker(const string& game_state);	
 
+	//yang diperlukan AI 
 	string getGameStateString() const;
 	static Checker parseGameStateString(const string& game_state);
 	Checker simulate(GameMove move) const;	
-	
+	vector<GameMove> getAllLegalMoves() const;
+	int getTurn() const;
+	int whoWin() const;
+
 	int getSize() const;
 	bool movePiece(GameMove move);
-	vector<Point> getWalkableFromCoinInTile(int row,int col) const; 
-	vector<GameMove> getAllLegalMoves() const;
+	vector<Point> getWalkableFromCoinInTile(int row,int col) const; 	
 	static GameTile convertToTile(char c);
 	void printBoard() const;	
 	bool isThereEatable() const;
-	bool nextTurn();
-	int getTurn() const;
-	int whoWin() const;
+	bool nextTurn();		
 	bool isMoveValid(GameMove move) const;
 };
 
