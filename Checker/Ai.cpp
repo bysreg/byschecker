@@ -62,7 +62,7 @@ int luaopen_aiclib (lua_State *L) {
     return 1;
 }
 
-Ai::Ai() : L() {	
+Ai::Ai(int algo_type) : L(NULL), algo_type(algo_type) {	
 	L = luaL_newstate();                        /* Create Lua state variable */
     luaL_openlibs(L);                           /* open semua standard Lua libraries */
 
