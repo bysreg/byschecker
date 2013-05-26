@@ -75,6 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ai.lua" />
+    <None Include="ai_profiles.lua" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,4 @@
+------------------NEW GAME----------------------
+best_move : 	1	tree size : 	131	current sim count : 	131
+P1 langkah dari [6, 1] ke [5, 2] sukses
+best_move : 	1	tree size : 	271	current sim count : 	140

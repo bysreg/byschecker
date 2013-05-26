@@ -62,34 +62,52 @@ int luaopen_aiclib (lua_State *L) {
     return 1;
 }
 
-Ai::Ai(int algo_type) : L(NULL), algo_type(algo_type) {	
-	L = luaL_newstate();                        /* Create Lua state variable */
-    luaL_openlibs(L);                           /* open semua standard Lua libraries */
+lua_State* Ai::L = NULL;
 
-	luaL_requiref(L, "aif", luaopen_aiclib, 1); // butuh aif (AI functions) dan taro di global name lua
+Ai::Ai(string ai_profile) {	
+	string ai_profiles_path = "ai_profiles.lua";
 
-    if (luaL_loadfile(L, "ai.lua"))    /* Load but don't run the Lua script */
-		bail(L, "luaL_loadfile() failed");      /* Error out if file can't be read */	
+	staticInit();
+	lua_getglobal(L, "createProfile");
+	lua_pushstring(L, ai_profiles_path.c_str());
+    lua_pushstring(L, ai_profile.c_str());
+    if(lua_pcall(L, 2, 1, 0))
+        bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */
 
-	if (lua_pcall(L, 0, 0, 0))                  /* Run the loaded Lua script */
-		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
+    profile_ref = luaL_ref(L, LUA_REGISTRYINDEX); // pop the resulting profile object and store its reference
 }
 
 Ai::~Ai() {
-	lua_close(L);                               /* Clean up, free the Lua state var */
+	//fixme : dont forget to delete profile object associated with this object
 }
 
 GameMove Ai::selectMove(const Checker& checker) {
 	vector<GameMove> legalMoves = checker.getAllLegalMoves();	
 		
-	lua_getglobal(L, "monteCarlo");	
-	lua_pushstring(L, checker.getGameStateString().c_str());
-	lua_pushnumber(L, legalMoves.size());	
-	
-	if(lua_pcall(L, 2, 1, 0))
-		bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */	
-    
-	int ret = lua_tonumber(L, -1);
-    lua_pop(L, 1);  /* pop returned value */		
+	lua_getglobal(L, "exec");
+    lua_rawgeti(L, LUA_REGISTRYINDEX, profile_ref);
+    lua_pushstring(L, checker.getGameStateString().c_str());
+
+    if(lua_pcall(L, 2, 1, 0))
+        bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */
+
+    int ret = lua_tonumber(L, -1);
+    lua_pop(L, 1);  /* pop returned value */    
 	return legalMoves[ret];
+}
+
+void Ai::staticInit()
+{
+    if(L == NULL) {        
+        string ai_lib_path = "ai.lua";
+        L = luaL_newstate();
+        luaL_openlibs(L);                           /* open all standard Lua libraries */
+        luaL_requiref(L, "aif", luaopen_aiclib, 1);
+
+		if (luaL_loadfile(L, ai_lib_path.c_str()))    /* Load but don't run the Lua script */
+            bail(L, "luaL_loadfile() failed");      /* Error out if file can't be read */
+
+        if (lua_pcall(L, 0, 0, 0))                  /* Run the loaded Lua script */
+            bail(L, "lua_pcall() failed");          /* Error out if Lua file has an error */
+    }
 }
